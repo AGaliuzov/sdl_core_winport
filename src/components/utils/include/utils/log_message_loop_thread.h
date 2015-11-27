@@ -36,9 +36,9 @@
 #include <queue>
 #include <cstdint>
 
-#if defined(OS_POSIX)
+#ifdef LOG4CXX_LOGGER
 #include <log4cxx/logger.h>
-#elif defined(WIN_NATIVE)
+#else
 #include <windows.h>
 #endif
 
@@ -61,6 +61,7 @@ typedef struct {
   HANDLE      logger_handle;
   std::string logger_name;
   uint32_t    level;
+  SYSTEMTIME  time;
   std::string entry;
   uint32_t    thread;
   FILE*       file;
@@ -72,7 +73,7 @@ typedef threads::MessageLoopThread<LogMessageQueue> LogMessageLoopThreadTemplate
 
 class LogMessageHandler : public LogMessageLoopThreadTemplate::Handler {
  public:
-  virtual void Handle(const LogMessage message);
+  virtual void Handle(const LogMessage message) OVERRIDE;
 };
 
 class LogMessageLoopThread: public LogMessageLoopThreadTemplate {

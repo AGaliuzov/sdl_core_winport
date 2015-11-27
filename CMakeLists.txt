@@ -186,7 +186,7 @@ if(MSVC)
   if (${QT_PORT})
   # qt specific  flags
   else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /GF /GR /W0 /WX /Zc:wchar_t /favor:blend")# Add MSVS specific flags
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /GF /GR /W0 /WX /Zc:wchar_t /favor:blend")# Add MSVS specific flags
     # 0 (MultiThreaded) == /MT
     # 1 (MultiThreadedDebug) == /MTd
     # 2 (MultiThreadedDLL) == /MD
@@ -260,9 +260,11 @@ endif()
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   add_definitions(-DOS_WINDOWS)
+  add_definitions(-DWIN32_LEAN_AND_MEAN)
   add_definitions(-DWIN_NATIVE)
 else()
   add_definitions(-DOS_POSIX)
+  add_definitions(-DLOG4CXX_LOGGER)
 endif()
 
 if (EXTENDED_MEDIA_MODE)
